@@ -33,6 +33,7 @@ public class BaseTest {
         loginPage = new LoginPage();
         projectsPage = new ProjectsPage();
 
+
 //        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
 //                .screenshots(false)
 //                .savePageSource(true)

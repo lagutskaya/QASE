@@ -11,4 +11,3 @@ public class AllureUtils {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
-
