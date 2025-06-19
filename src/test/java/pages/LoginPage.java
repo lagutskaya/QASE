@@ -12,7 +12,6 @@ public class LoginPage {
     public LoginPage openPage() {
         open("/login");
         return this;
-
     }
 
     public LoginPage login(String email, String password) {

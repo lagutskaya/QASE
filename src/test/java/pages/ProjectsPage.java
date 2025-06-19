@@ -22,7 +22,6 @@ public class ProjectsPage {
     public ProjectsPage openPage() {
         open("/projects");
         return this;
-
     }
 
     public ProjectsPage waitTillOpened() {
