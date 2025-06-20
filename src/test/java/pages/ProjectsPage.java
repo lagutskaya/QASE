@@ -1,13 +1,14 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import lombok.extern.log4j.Log4j2;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-
+@Log4j2
 public class ProjectsPage {
 
     private final SelenideElement CREATE_NEW_PROJECT_BUTTON = $(byText("Create new project"));
@@ -25,11 +26,15 @@ public class ProjectsPage {
     }
 
     public ProjectsPage waitTillOpened() {
+        log.info("Project page is opened");
         CREATE_NEW_PROJECT_BUTTON.shouldBe(visible);
         return this;
     }
 
     public ProjectsPage createNewProject(String projectName, String projectCode, String projectDescription) {
+        log.info("Project {} is created with project code = {} " +
+                        "and project description : {}"
+                , projectName, projectCode, projectDescription);
         CREATE_NEW_PROJECT_BUTTON.click();
         PROJECT_NAME_FIELD.setValue(projectName);
         PROJECT_CODE_FIELD.setValue(projectCode);
@@ -40,6 +45,7 @@ public class ProjectsPage {
     }
 
     public ProjectsPage deleteProject(String project) {
+        log.info("Project {} was deleted", project);
         $(byText(project))
                 .ancestor("tr")
                 .find("button[aria-label='Open action menu']")
@@ -47,5 +53,10 @@ public class ProjectsPage {
         REMOVE_BUTTON.click();
         DELETE_PROJECT_BUTTON.click();
         return this;
+    }
+
+    public boolean getCreatedProjectName(String projectName) {
+        $(byText(projectName)).shouldBe(visible);
+        return true;
     }
 }

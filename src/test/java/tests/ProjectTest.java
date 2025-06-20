@@ -2,17 +2,23 @@ package tests;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertTrue;
+
 public class ProjectTest extends BaseTest {
 
-    @Test
+    @Test(testName = "Создание проекта")
     public void checkCreateProject() {
         loginPage.openPage()
-                .login("polinalagutskaya@gmail.com", "TestQaseUser1");
+                .login(user, password);
         projectsPage.waitTillOpened()
-                .createNewProject("TEST", "QA30", "Description for QASE project");
+                .createNewProject("TEST",
+                        "QA30",
+                        "Description for QASE project");
+        assertTrue(projectsPage.getCreatedProjectName("TEST"), "Project isn't created");
+
     }
 
-    @Test
+    @Test(testName = "Удаление проекта")
     public void checkDeleteProject() {
         loginPage.openPage()
                 .login("polinalagutskaya@gmail.com", "TestQaseUser1");

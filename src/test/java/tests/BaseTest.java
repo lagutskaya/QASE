@@ -3,26 +3,25 @@ package tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import pages.LoginPage;
 import pages.ProjectsPage;
+import utils.PropertyReader;
+import utils.TestListener;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
     LoginPage loginPage;
     ProjectsPage projectsPage;
 
-    @BeforeClass(alwaysRun = true)
-    public void settings() {
-        SelenideLogger.addListener("AllureSelenide",
-                new AllureSelenide()
-                        .screenshots(true)
-                        .savePageSource(true));
-    }
+    String user = System.getProperty("user", PropertyReader.getProperty("user"));
+    String password = System.getProperty("password", PropertyReader.getProperty("password"));
 
     @BeforeMethod
     public void setup() {
@@ -33,17 +32,14 @@ public class BaseTest {
         loginPage = new LoginPage();
         projectsPage = new ProjectsPage();
 
-//        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-//                .screenshots(false)
-//                .savePageSource(true)
-//        );
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true)
+        );
     }
 
     @AfterMethod
-    public void tearDown() {
-//        if (result.FAILURE == result.getStatus()) {
-//            AllureUtils.takeScreenshot(driver);
-//        }
+    public void tearDown(ITestResult result) {
         closeWebDriver();
     }
 }
